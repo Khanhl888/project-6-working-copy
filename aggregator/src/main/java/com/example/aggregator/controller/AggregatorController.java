@@ -46,7 +46,6 @@ public class AggregatorController {
 
         return entries;
     }
-
     @GetMapping("/getDefinitionFor/{word}")
     public Entry getDefinitionFor(@PathVariable String word) {
 
@@ -64,6 +63,24 @@ public class AggregatorController {
                 .toString();
         logger.info(message);
         return entry;
+    }
+
+    @GetMapping("/getAllPalindromes")
+    public List<Entry> getAllPalindromes() {
+
+        StopWatch sw = new StopWatch();
+        sw.start();
+        List<Entry> entries = service.getAllPalindromes();
+        sw.stop();
+
+        long nanoSeconds = sw.getLastTaskTimeNanos();
+        String message = new StringBuilder().append("Retrieved entry for Palindromes")
+                .append("] in ")
+                .append(nanoSeconds / 1000000.0)
+                .append("ms")
+                .toString();
+        logger.info(message);
+        return entries;
     }
 
     @GetMapping("/getWordsThatContainSuccessiveLettersAndStartsWith/{chars}")
